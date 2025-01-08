@@ -1,0 +1,50 @@
+@* AppBar.razor *@
+
+@* Main AppBar container *@
+<MudAppBar Position="Sticky">
+    @* Menu toggle button *@
+    <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                   Color="MudBlazor.Color.Info"
+                   Edge="Edge.Start"
+                   Size="Size.Large"
+                   OnClick="async () => await OnSidebarToggled.InvokeAsync()" />
+
+    <MudSpacer />
+
+    @* Theme toggle button *@
+    <MudIconButton Icon="@(_themeService.IsLightMode ? Icons.Material.Filled.WbSunny : Icons.Material.Filled.DarkMode)"
+                   Color="@(_themeService.IsLightMode ? Color.Tertiary : Color.Primary)"
+                   OnClick="ToggleTheme" />
+
+    @* User menu *@
+    <MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" Dense="true" Class="mt-1 ml-4">
+        @* User avatar/name display *@
+        <ActivatorContent>
+            <MudAvatar Color="Color.Primary" Style="width: 150px; height: 40px; font-size: 14px; border-radius: 8px">
+                @UserDisplayName
+            </MudAvatar>
+        </ActivatorContent>
+
+        <ChildContent>
+            @* User roles list *@
+            <MudCard Class="pa-0" Elevation="0" Style="min-width: 150px; max-width: 200px" />
+            <MudList T="string" Dense="true" DisabledPadding="true" DisablePadding="true" Class="py-1">
+                @foreach (var role in _userRoles)
+                {
+                    <MudListItem Dense="true" Class="py-0">
+                        <MudChip Color="Color.Primary" Size="Size.Small" Class="mr-2">@role</MudChip>
+                    </MudListItem>
+                }
+            </MudList>
+
+            @* Divider *@
+            <MudDivider Class="my-2" />
+
+            @* Logout button *@
+            <MudListItem T="string" Text="Logout"
+                         Icon="@Icons.Material.Filled.Login"
+                         IconColor="Color.Primary"
+                         OnClick="Logout" />
+        </ChildContent>
+    </MudMenu>
+</MudAppBar>

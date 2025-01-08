@@ -1,0 +1,43 @@
+﻿@* NavMenu.razor *@
+
+@* Main Drawer Container *@
+<MudDrawer @bind-Open="SideBarOpen" Clipped="true" Width="200px">
+    @* Drawer Header *@
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h6"><div hidden="@(!SideBarOpen)">@AppConfiguration!.AppLabel</div></MudText>
+    </MudDrawerHeader>
+
+    @* Navigation Menu *@
+    <MudNavMenu>
+        @* Render Links with Roles *@
+        @foreach (var link in Links!.Links)
+        {
+            <AuthorizeView Roles="@link.Role">
+                <Authorized>
+                    @if (link.IconType == "MudBlazor")
+                    {
+                        <MudNavLink Href="@link.Href" Icon="@(typeof(Icons.Material.Filled).GetField(link.Icon!)?.GetValue(null) as string)">@link.Text</MudNavLink>
+                    }
+                    else
+                    {
+                        <MudNavLink Href="@link.Href" Icon="@link.Icon">@link.Text</MudNavLink>
+                    }
+                </Authorized>
+            </AuthorizeView>
+        }
+    </MudNavMenu>
+
+    <MudSpacer />
+
+    @* Company Logo *@
+    <MudContainer Class="d-flex justify-content-center">
+        @if (_ThemeService!.IsLightMode)
+        {
+            <MudImage Src="_content/Blazor.RCL/img/CompanyLogoTransparent.png" Width="160" Class="mb-2" />
+        }
+        else
+        {
+            <MudImage Src="_content/Blazor.RCL/img/CompanyLogoWhiteTransparent.png" Width="160" Class="mb-2" />
+        }
+    </MudContainer>
+</MudDrawer>

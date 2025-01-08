@@ -1,0 +1,34 @@
+﻿@page "/weather"
+
+<PageTitle>Weather</PageTitle>
+
+<AuthorizeView Roles="User">
+    <MudContainer>
+        @* Header *@
+        <MudText Typo="Typo.h3">Weather</MudText>
+        <MudText Typo="Typo.body1">This component demonstrates showing data.</MudText>
+
+        @* Weather Data Display *@
+        @if (_forecasts == null)
+        {
+            <MudText><em>Loading...</em></MudText>
+        }
+        else
+        {
+            <MudTable Items="@_forecasts" Context="forecast">
+                <HeaderContent>
+                    <MudTh>Date</MudTh>
+                    <MudTh>Temp. (C)</MudTh>
+                    <MudTh>Temp. (F)</MudTh>
+                    <MudTh>Summary</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd>@forecast.Date.ToShortDateString()</MudTd>
+                    <MudTd>@forecast.TemperatureC</MudTd>
+                    <MudTd>@forecast.TemperatureF</MudTd>
+                    <MudTd>@forecast.Summary</MudTd>
+                </RowTemplate>
+            </MudTable>
+        }
+    </MudContainer>
+</AuthorizeView>

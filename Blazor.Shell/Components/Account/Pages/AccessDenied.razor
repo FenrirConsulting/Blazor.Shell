@@ -1,0 +1,17 @@
+﻿@page "/account/accessdenied"
+@attribute [AllowAnonymous]
+
+@* Main Container *@
+<MudContainer MaxWidth="MaxWidth.Small" Class="justify-center align-center" Style="height: 100%;">
+    @* Access Denied Message Card *@
+    <MudPaper Elevation="2" Class="pa-4 d-inline-flex flex-column">
+        @* Title *@
+        <MudText Typo="Typo.h3">Access Denied</MudText>
+
+        @* Explanation Message *@
+        <MudText Typo="Typo.body1">You do not have permission to access these tools.</MudText>
+
+        @* Login Button *@
+        <MudButton OnClick="Login" Color="MudBlazor.Color.Info">Login</MudButton>
+    </MudPaper>
+</MudContainer>

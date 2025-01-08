@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<Version>1.0.17</Version>
+		<FileVersion>1.0.17</FileVersion>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Configurations>Debug;Release</Configurations>
+		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+		<RootNamespace>Blazor.RCL</RootNamespace>
+		<AssemblyName>Blazor.RCL</AssemblyName>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+		<!-- Added NuGet package metadata -->
+		<Title>Blazor.RCL</Title>
+		<PackageTags>Blazor.RCL</PackageTags>
+		<PackageProjectUrl>https://github.com/FenrirConsulting/Blazor.RCL</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/FenrirConsulting/Blazor.RCL.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="DocumentFormat.OpenXml" Version="3.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="8.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="8.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Graph" Version="5.56.0" />
+		<PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="8.0.7" />
+		<PackageReference Include="MudBlazor" Version="6.19.0" />
+		<PackageReference Include="MudBlazor.Extensions" Version="1.7.86" />
+		<PackageReference Include="MudBlazor.ThemeManager" Version="1.1.0" />
+		<PackageReference Include="NLog" Version="5.3.2" />
+		<PackageReference Include="NLog.Extensions.Logging" Version="5.3.11" />
+		<PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.6.0" />
+		<PackageReference Include="System.DirectoryServices" Version="8.0.0" />
+		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Application\DTO\" />
+		<Folder Include="Application\Services\" />
+		<Folder Include="Domain\Enums\" />
+		<Folder Include="Domain\Interfaces\" />
+		<Folder Include="Domain\ValueObjects\" />
+		<Folder Include="Infrastructure\Data\Context\" />
+		<Folder Include="Infrastructure\Identity\" />
+	</ItemGroup>
+
+</Project>

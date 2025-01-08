@@ -1,0 +1,312 @@
+﻿@page "/admin"
+@attribute [Authorize(Roles = "Approver")]
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    <MudText Typo="Typo.h3" GutterBottom="true">Admin Page</MudText>
+    <MudText Typo="Typo.h5" Color="Color.Primary">Application Configuration for @_appConfiguration!.AppLabel</MudText>
+
+    <MudExpansionPanels>
+        <MudExpansionPanel Text="Tools Configuration">
+            <MudPaper Elevation="3" Class="pa-4 mt-4">
+                <MudButton Color="Color.Primary" OnClick="@(() => OpenEditor(null, EditingType.ToolsConfiguration))">Add New</MudButton>
+                @if (_toolConfigurations == null)
+                {
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudTable Items="_toolConfigurations" Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <HeaderContent>
+                            <MudTh>Setting</MudTh>
+                            <MudTh>Value</MudTh>
+                            <MudTh>Actions</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Setting">@context.Setting</MudTd>
+                            <MudTd DataLabel="Value">
+                                <MudText>@(context.Value?.Length > 50 ? context.Value[..47] + "..." : context.Value)</MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Actions">
+                                <MudButton Color="Color.Info" Variant="Variant.Outlined" OnClick="@(() => OpenEditor(context, EditingType.ToolsConfiguration))">Edit</MudButton>
+                                <MudButton Color="Color.Error" Variant="Variant.Outlined" OnClick="@(() => RemoveItem(context.Id, EditingType.ToolsConfiguration))">Remove</MudButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
+            </MudPaper>
+        </MudExpansionPanel>
+
+        <MudExpansionPanel Text="Service Accounts">
+            <MudPaper Elevation="3" Class="pa-4 mt-4">
+                <MudButton Color="Color.Primary" OnClick="@(() => OpenEditor(null, EditingType.ServiceAccount))">Add New</MudButton>
+                @if (_serviceAccounts == null)
+                {
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudTable Items="_serviceAccounts" Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <HeaderContent>
+                            <MudTh>SAM</MudTh>
+                            <MudTh>Domain</MudTh>
+                            <MudTh>Key Type</MudTh>
+                            <MudTh>Key Path</MudTh>
+                            <MudTh>Actions</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="SAM">@context.SAM</MudTd>
+                            <MudTd DataLabel="Domain">@context.Domain</MudTd>
+                            <MudTd DataLabel="Key Type">@context.KeyType</MudTd>
+                            <MudTd DataLabel="Key Path">@context.KeyPath</MudTd>
+                            <MudTd DataLabel="Actions">
+                                <MudButton Color="Color.Info" Variant="Variant.Outlined" OnClick="@(() => OpenEditor(context, EditingType.ServiceAccount))">Edit</MudButton>
+                                <MudButton Color="Color.Error" Variant="Variant.Outlined" OnClick="@(() => RemoveItem(context.Id, EditingType.ServiceAccount))">Remove</MudButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
+            </MudPaper>
+        </MudExpansionPanel>
+
+        <MudExpansionPanel Text="LDAP Servers">
+            <MudPaper Elevation="3" Class="pa-4 mt-4">
+                <MudButton Color="Color.Primary" OnClick="@(() => OpenEditor(null, EditingType.LDAPServer))">Add New</MudButton>
+                @if (_ldapServers == null)
+                {
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudTable Items="_ldapServers" Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <HeaderContent>
+                            <MudTh>Name</MudTh>
+                            <MudTh>Server</MudTh>
+                            <MudTh>Port</MudTh>
+                            <MudTh>Search Base</MudTh>
+                            <MudTh>Admin Search Base</MudTh>
+                            <MudTh>Actions</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Name">@context.Name</MudTd>
+                            <MudTd DataLabel="Server">@context.Server</MudTd>
+                            <MudTd DataLabel="Port">@context.Port</MudTd>
+                            <MudTd DataLabel="Search Base">@context.SearchBase</MudTd>
+                            <MudTd DataLabel="Admin Search Base">@context.AdminSearchBase</MudTd>
+                            <MudTd DataLabel="Actions">
+                                <MudButton Color="Color.Info" Variant="Variant.Outlined" OnClick="@(() => OpenEditor(context, EditingType.LDAPServer))">Edit</MudButton>
+                                <MudButton Color="Color.Error" Variant="Variant.Outlined" OnClick="@(() => RemoveItem(context.Id, EditingType.LDAPServer))">Remove</MudButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
+            </MudPaper>
+        </MudExpansionPanel>
+
+        <MudExpansionPanel Text="Authenticate Configuration">
+            <MudPaper Elevation="3" Class="pa-4 mt-4">
+                <MudButton Color="Color.Primary" OnClick="@(() => OpenEditor(null, EditingType.ToolsConfiguration))">Add New</MudButton>
+                @if (_authConfigurations == null)
+                {
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudTable Items="_authConfigurations" Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <HeaderContent>
+                            <MudTh>Setting</MudTh>
+                            <MudTh>Value</MudTh>
+                            <MudTh>Actions</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Setting">@context.Setting</MudTd>
+                            <MudTd DataLabel="Value">
+                                <MudText>@(context.Value?.Length > 50 ? context.Value[..47] + "..." : context.Value)</MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Actions">
+                                <MudButton Color="Color.Info" Variant="Variant.Outlined" OnClick="@(() => OpenEditor(context, EditingType.ToolsConfiguration))">Edit</MudButton>
+                                <MudButton Color="Color.Error" Variant="Variant.Outlined" OnClick="@(() => RemoveItem(context.Id, EditingType.ToolsConfiguration))">Remove</MudButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
+            </MudPaper>
+        </MudExpansionPanel>
+
+        @* Remote Scripts Configuration Panel *@
+        <MudExpansionPanel Text="Remote Scripts Configuration">
+            <MudPaper Elevation="3" Class="pa-4 mt-4">
+                <MudButton Color="Color.Primary" OnClick="@(() => OpenScriptEditor(null))">Add New Script</MudButton>
+                @if (_remoteScripts == null)
+                {
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudTable Items="@_remoteScripts" Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <HeaderContent>
+                            <MudTh>Name</MudTh>
+                            <MudTh>Location</MudTh>
+                            <MudTh>Variables</MudTh>
+                            <MudTh>Last Modified</MudTh>
+                            <MudTh>Actions</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Name">@context.Name</MudTd>
+                            <MudTd DataLabel="Location">@context.Location</MudTd>
+                            <MudTd DataLabel="Variables">
+                                <MudText>@(context.Variables?.Length > 50 ? context.Variables[..47] + "..." : context.Variables)</MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Last Modified">
+                                @(context.AuditChangeDate?.ToString("MM/dd/yyyy HH:mm") ?? context.AuditAddDate.ToString("MM/dd/yyyy HH:mm"))
+                            </MudTd>
+                            <MudTd DataLabel="Actions">
+                                <MudButton Color="Color.Info"
+                                           Variant="Variant.Outlined"
+                                           OnClick="@(() => OpenScriptEditor(context))">Edit</MudButton>
+                                <MudButton Color="Color.Error"
+                                           Variant="Variant.Outlined"
+                                           OnClick="@(() => RemoveScript(context))">Remove</MudButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
+            </MudPaper>
+        </MudExpansionPanel>
+
+        @* Server Hosts Configuration Panel *@
+        <MudExpansionPanel Text="Server Hosts Configuration">
+            <MudPaper Elevation="3" Class="pa-4 mt-4">
+                <MudButton Color="Color.Primary" OnClick="@(() => OpenHostEditor(null))">Add New Server Host</MudButton>
+                @if (_serverHosts == null)
+                {
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudTable Items="@_serverHosts" Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <HeaderContent>
+                            <MudTh>Hostname</MudTh>
+                            <MudTh>Environment</MudTh>
+                            <MudTh>Display Name</MudTh>
+                            <MudTh>Role</MudTh>
+                            <MudTh>Last Modified</MudTh>
+                            <MudTh>Actions</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Hostname">@context.Hostname</MudTd>
+                            <MudTd DataLabel="Environment">@context.Environment</MudTd>
+                            <MudTd DataLabel="Display Name">@context.Name</MudTd>
+                            <MudTd DataLabel="Role">@context.Role</MudTd>
+                            <MudTd DataLabel="Last Modified">
+                                @(context.AuditChangeDate?.ToString("MM/dd/yyyy HH:mm") ?? context.AuditAddDate.ToString("MM/dd/yyyy HH:mm"))
+                            </MudTd>
+                            <MudTd DataLabel="Actions">
+                                <MudButton Color="Color.Info"
+                                           Variant="Variant.Outlined"
+                                           OnClick="@(() => OpenHostEditor(context))">Edit</MudButton>
+                                <MudButton Color="Color.Error"
+                                           Variant="Variant.Outlined"
+                                           OnClick="@(() => RemoveHost(context.Id))">Remove</MudButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
+            </MudPaper>
+        </MudExpansionPanel>
+    </MudExpansionPanels>
+</MudContainer>
+
+<MudDialog @bind-IsVisible="_isDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">@(_isNewItem ? "Add New" : "Edit") @_currentEditingType</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_currentEditingType == EditingType.ToolsConfiguration)
+        {
+            <MudTextField @bind-Value="((ToolsConfiguration)_editingItem!).Setting" Label="Setting" />
+            <MudTextField @bind-Value="((ToolsConfiguration)_editingItem!).Value" Label="Value (JSON)" Lines="10" />
+        }
+        else if (_currentEditingType == EditingType.ServiceAccount)
+        {
+            <MudTextField @bind-Value="((ServiceAccount)_editingItem!).SAM" Label="SAM" />
+            <MudTextField @bind-Value="((ServiceAccount)_editingItem!).Domain" Label="Domain" />
+            <MudTextField @bind-Value="((ServiceAccount)_editingItem!).KeyType" Label="Key Type" />
+            <MudTextField @bind-Value="((ServiceAccount)_editingItem!).KeyPath" Label="Key Path" />
+        }
+        else if (_currentEditingType == EditingType.LDAPServer)
+        {
+            <MudTextField @bind-Value="((LDAPServer)_editingItem!).Name" Label="Name" />
+            <MudTextField @bind-Value="((LDAPServer)_editingItem!).Server" Label="Server" />
+            <MudTextField @bind-Value="((LDAPServer)_editingItem!).Port" Label="Port" />
+            <MudTextField @bind-Value="((LDAPServer)_editingItem!).SearchBase" Label="Search Base" />
+            <MudTextField @bind-Value="((LDAPServer)_editingItem!).AdminSearchBase" Label="Admin Search Base" />
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="SaveChanges">Save</MudButton>
+        <MudButton Color="Color.Secondary" OnClick="CancelEdit">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Server Host Dialog *@
+<MudDialog @bind-IsVisible="_isHostDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">@(_isNewHost ? "Add New" : "Edit") Server Host</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudTextField @bind-Value="_editingHost!.Hostname"
+                              Label="Hostname"
+                              Required="true" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField @bind-Value="_editingHost!.Environment"
+                              Label="Environment"
+                              Required="true" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField @bind-Value="_editingHost!.Name"
+                              Label="Display Name"
+                              Required="true" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField @bind-Value="_editingHost!.Role"
+                              Label="Role"
+                              Required="true" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="SaveHostChanges">Save</MudButton>
+        <MudButton Color="Color.Secondary" OnClick="CancelHostEdit">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+ @* Remote Scripts Dialog *@
+<MudDialog @bind-IsVisible="_isScriptDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">@(_isNewScript ? "Add New" : "Edit") Remote Script</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudTextField @bind-Value="_editingScript!.Name"
+                              Label="Name"
+                              Required="true" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField @bind-Value="_editingScript!.Location"
+                              Label="Location"
+                              Required="true" />
+            </MudItem>
+            <MudItem xs="12">
+                <ScriptVariablesEditor @bind-Value="_editingScript!.Variables" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="SaveScriptChanges">Save</MudButton>
+        <MudButton Color="Color.Secondary" OnClick="CancelScriptEdit">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>

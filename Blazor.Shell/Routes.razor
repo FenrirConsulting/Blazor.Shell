@@ -1,0 +1,123 @@
+﻿@implements IDisposable
+@inject NavigationManager NavigationManager
+@inject ErrorHandlerService ErrorHandler
+
+@* Main Router Component *@
+<ErrorBoundary @ref="errorBoundary">
+    <ChildContent>
+        <AuthorizeView>
+            <Authorized>
+                @RouterWithLayout(typeof(MainLayout))
+            </Authorized>
+            <NotAuthorized>
+                @RouterWithLayout(typeof(PublicLayout))
+            </NotAuthorized>
+        </AuthorizeView>
+    </ChildContent>
+    <ErrorContent Context="exception">
+        <div class="error-ui">
+            <h1>An error has occurred.</h1>
+            <p>@exception.Message</p>
+            <button class="reload" @onclick="ReloadPage">Reload</button>
+        </div>
+    </ErrorContent>
+</ErrorBoundary>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+<style>
+    #blazor-error-ui {
+        background: lightyellow;
+        bottom: 0;
+        box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+        display: none;
+        left: 0;
+        padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+
+        #blazor-error-ui .dismiss {
+            cursor: pointer;
+            position: absolute;
+            right: 0.75rem;
+            top: 0.5rem;
+        }
+
+    .error-ui {
+        background: lightyellow;
+        border: 1px solid #ffd800;
+        border-radius: 4px;
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+        .error-ui .reload {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+</style>
+
+@code {
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnInitialized()
+    {
+        ErrorHandler.HandleError += OnError;
+    }
+
+    private void OnError(Exception exception)
+    {
+        ErrorHandler.ProcessError(exception);
+        StateHasChanged();
+    }
+
+    private void ReloadPage()
+    {
+        errorBoundary?.Recover();
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+
+    public void Dispose()
+    {
+        ErrorHandler.HandleError -= OnError;
+    }
+
+    #region Router Configuration
+    /// <summary>
+    /// Generates a RenderFragment for the router with the specified layout type.
+    /// </summary>
+    /// <param name="layoutType">The type of the layout to use.</param>
+    /// <returns>A RenderFragment containing the router configuration.</returns>
+    private RenderFragment RouterWithLayout(Type layoutType) => __builder =>
+    {
+        <Router AppAssembly="@typeof(Program).Assembly">
+            <Found Context="routeData">
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@layoutType">
+                    <NotAuthorized>
+                        <AccessDenied />
+                    </NotAuthorized>
+                </AuthorizeRouteView>
+                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            </Found>
+            <NotFound>
+                <AccessDenied />
+            </NotFound>
+        </Router>
+    };
+    #endregion
+}

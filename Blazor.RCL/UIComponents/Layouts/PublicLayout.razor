@@ -1,0 +1,23 @@
+@inherits LayoutComponentBase
+@attribute [AllowAnonymous]
+
+@* Loading Indicator *@
+@if (_isLoading)
+{
+    <MudProgressCircular Indeterminate="true" Size="Size.Large" Class="mud-theme-primary mx-auto d-block mt-5" />
+}
+else
+{
+    @* Main Layout *@
+    <MudLayout class="mud-layout-custom">
+        @* Main Content Area *@
+        <MudMainContent class="mud-main-content-custom content-center">
+            @Body
+        </MudMainContent>
+    </MudLayout>
+
+    @* MudBlazor Providers *@
+    <MudThemeProvider Theme="@(_themeService?.CurrentTheme)" />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
+}

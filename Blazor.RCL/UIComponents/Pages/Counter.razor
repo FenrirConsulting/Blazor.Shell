@@ -1,0 +1,18 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+
+<AuthorizeView Roles="User">
+    <MudContainer>
+        @* Page Title *@
+        <PageTitle>Counter</PageTitle>
+
+        @* Header *@
+        <MudText Typo="Typo.h3">Counter</MudText>
+
+        @* Counter Display *@
+        <MudText Typo="Typo.body1">Current count: @_currentCount</MudText>
+
+        @* Increment Button *@
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="IncrementCount">Click me</MudButton>
+    </MudContainer>
+</AuthorizeView>

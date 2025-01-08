@@ -1,0 +1,53 @@
+﻿@page "/remoteaccess"
+@attribute [Authorize(Roles = "Developer")]
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudPaper Elevation="3" Class="pa-4">
+        <MudGrid>
+            @* Service Account Selection *@
+            <MudItem xs="6">
+                <MudSelect T="ServiceAccount" Label="Service Accounts" @bind-Value="SelectedServiceAccount" AnchorOrigin="Origin.BottomCenter">
+                    @foreach (var account in ServiceAccountList)
+                    {
+                        <MudSelectItem Value="@account">@account.SAM</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+
+            @* Remote Script Selection *@
+            <MudItem xs="6">
+                <MudSelect T="RemoteScript" Label="Remote Scripts" @bind-Value="SelectedRemoteScript" AnchorOrigin="Origin.BottomCenter">
+                    @foreach (var script in RemoteScriptList)
+                    {
+                        <MudSelectItem Value="@script">@script.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+        </MudGrid>
+
+        @* Dynamic Variables Panel *@
+        @if (SelectedRemoteScript != null && DynamicVariables.Any())
+        {
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="Variables">
+                    <MudGrid>
+                        @foreach (var variable in DynamicVariables)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudTextField @bind-Value="DynamicVariables[variable.Key]" Label="@variable.Key" Variant="Variant.Outlined" />
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        }
+
+        @* Execute Script Button *@
+        <MudButton Class="mt-4" Variant="Variant.Filled" Color="Color.Primary" OnClick="ExecuteScript">Run</MudButton>
+    </MudPaper>
+
+    @* Console Output *@
+    <MudPaper Elevation="3" Class="pa-4 mt-4">
+        <MudTextField @bind-Value="ConsoleOutput" Label="Console Output" Lines="10" Variant="Variant.Outlined" ReadOnly="true" />
+    </MudPaper>
+</MudContainer>

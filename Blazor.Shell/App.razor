@@ -1,0 +1,32 @@
+﻿@attribute [AllowAnonymous]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="@AppConfiguration!.BaseUrl" />
+
+    <!-- Font Library Imports -->
+    <link href="_content/Blazor.RCL/fonts/Roboto.css" rel="stylesheet" />
+    <link href="_content/Blazor.RCL/fonts/Lato.css" rel="stylesheet" />
+
+    <!-- CSS Library Imports  -->
+    <link href="_content/Blazor.RCL/css/global.css" rel="stylesheet" />
+    <link href="_content/Blazor.RCL/css/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+    <link href="_content/Blazor.RCL/css/material/MaterialIcons.css" rel="stylesheet" />
+    <link href="_content/Blazor.RCL/css/fontawesome/all.css" rel="stylesheet" />
+    <link href="_content/Blazor.RCL/css/bootstrap/bootstrap-icons.css" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="_content/MudBlazor.Extensions/mudBlazorExtensions.min.css" rel="stylesheet" id="mudex-styles">
+    <link href="_content/Blazor.RCL/img/CompanyLogoWhiteTransparent.ico" rel="icon" type="image/x-icon" />
+    <HeadOutlet />
+</head>
+<body>
+    <Routes @rendermode="InteractiveServer" />
+
+    <!-- JS Library Imports  -->
+    <script src="_framework/blazor.web.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="_content/Blazor.RCL/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

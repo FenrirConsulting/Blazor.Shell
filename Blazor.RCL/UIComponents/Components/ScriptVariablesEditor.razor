@@ -1,0 +1,36 @@
+﻿<MudPaper Class="pa-4" Elevation="0">
+    <MudText Typo="Typo.h6" Class="mb-4">Script Variables (@Variables.Count variables)</MudText>
+
+    <div class="d-flex flex-column gap-4">
+        @foreach (var item in Variables)
+        {
+            <MudPaper Class="pa-4" Elevation="2">
+                <div class="d-flex gap-4 align-center">
+                    <MudTextField @bind-Value="item.Name"
+                                  Label="Variable Name"
+                                  Required="true"
+                                  Class="flex-1"
+                                  Immediate="true"
+                                  OnBlur="@(() => NotifyChange())" />
+                    <MudTextField @bind-Value="item.Value"
+                                  Label="Variable Value"
+                                  Required="true"
+                                  Class="flex-1"
+                                  Immediate="true"
+                                  OnBlur="@(() => NotifyChange())" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                   Color="Color.Error"
+                                   OnClick="@(() => RemoveVariable(item))" />
+                </div>
+            </MudPaper>
+        }
+    </div>
+
+    <MudButton OnClick="@HandleAddVariable"
+               StartIcon="@Icons.Material.Filled.Add"
+               Color="Color.Primary"
+               Variant="Variant.Filled"
+               Class="mt-4">
+        Add Variable (@Variables.Count)
+    </MudButton>
+</MudPaper>

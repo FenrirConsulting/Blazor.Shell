@@ -1,0 +1,54 @@
+﻿@page "/account/login"
+@attribute [AllowAnonymous]
+
+<MudContainer Class="d-flex flex-column" MaxWidth="MaxWidth.Small">
+    <MudPaper Elevation="2" Class="pa-4">
+        @* Login Form Header *@
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-10">Tools Login</MudText>
+
+        @* Login Form *@
+        <MudForm @ref="_form">
+            @* Domain Selection *@
+            <MudSelect Label="Domain" @bind-Value="LoginModel.SelectedServer">
+                @foreach (var server in _ldapServerList!.Servers)
+                {
+                    <MudSelectItem Value="@server.Server">@server.Name</MudSelectItem>
+                }
+            </MudSelect>
+
+            @* Username Input *@
+            <MudTextField Label="Username" @bind-Value="LoginModel.Username" />
+
+            @* Password Input *@
+            <MudTextField Label="Password" @bind-Value="LoginModel.Password"
+                          InputType="InputType.Password" @onkeydown="HandleEnterKeyPress" />
+
+            @* Login Button *@
+            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled"
+                       Color="Color.Primary" Class="mt-3" OnClick="@HandleLogin">
+                Login
+            </MudButton>
+        </MudForm>
+
+        @* Error Message Display *@
+        @if (_showErrorMessage)
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled">
+                @_errorMessage
+            </MudAlert>
+        }
+
+        @* Success Message Display *@
+        @if (_showSuccessMessage)
+        {
+            <MudAlert Severity="Severity.Success" Variant="Variant.Filled">
+                @_successMessage
+            </MudAlert>
+        }
+
+        @* Loading Overlay *@
+        <MudOverlay Visible="@_isLoading" DarkBackground="false" Absolute="true">
+            <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+        </MudOverlay>
+    </MudPaper>
+</MudContainer>

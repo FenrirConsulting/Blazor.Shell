@@ -1,0 +1,13 @@
+﻿::deep body {
+
+}
+
+::deep .mud-main-content.main-content-wrapper {
+    height: calc(100vh - var(--mud-appbar-height) - 80px);
+    margin-top: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1rem;
+}

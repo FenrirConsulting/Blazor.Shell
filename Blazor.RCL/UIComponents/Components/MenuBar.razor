@@ -1,0 +1,103 @@
+@* MenuBar.razor *@
+
+@* Main AppBar container *@
+<MudAppBar Fixed="true" Dense="true" Class="px-0 custom-appbar">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="px-0">
+        <MudStack Row="true" Spacing="0" AlignItems="AlignItems.Start" Class="ml-0">
+
+            @* Navigation Links *@
+            @foreach (var link in _Links.Links)
+            {
+                if (string.IsNullOrEmpty(link.Role))
+                {
+                    <NavLink href="@link.Href" Match="NavLinkMatch.All" class="nav-link">
+                        <MudButton Variant="Variant.Text" Class="custom-nav-button">
+                            @link.Text
+                        </MudButton>
+                    </NavLink>
+                }
+                else
+                {
+                    <AuthorizeView Roles="@link.Role">
+                        <Authorized>
+                            <NavLink href="@link.Href" Match="NavLinkMatch.All" class="nav-link">
+                                <MudButton Variant="Variant.Text" Class="custom-nav-button">
+                                    @link.Text
+                                </MudButton>
+                            </NavLink>
+                        </Authorized>
+                    </AuthorizeView>
+                }
+            }
+
+            @* Options Menu *@
+            <MudMenu AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft" Dense="true">
+                <ActivatorContent>
+                    <MudButton Variant="Variant.Text" Class="custom-nav-button">
+                        Options
+                    </MudButton>
+                </ActivatorContent>
+
+                <ChildContent>
+                    <MudPaper Elevation="0" Class="pa-4">
+                        <MudAvatar Color="Color.Primary" Style="width: 150px; height: 40px; font-size: 14px; border-radius: 8px; margin-bottom: 16px;">
+                            @(UserDisplayName)
+                        </MudAvatar>
+                        <MudCard Class="pa-0" Elevation="0" Style="min-width: 150px; max-width: 200px" />
+                        <MudStack Row="true" Spacing="1" Style="margin-bottom: 16px;">
+                            @foreach (var role in UserRoles)
+                            {
+                                <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@role</MudChip>
+                            }
+                        </MudStack>
+                        <MudButton OnClick="ToggleTheme" Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true"
+                                   StartIcon="@(_ThemeService.IsLightMode ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.WbSunny)"
+                                   Style="margin-bottom: 16px;">
+                            @(_ThemeService.IsLightMode ? "Dark Mode" : "Light Mode")
+                        </MudButton>
+                        
+                        <MudButton Icon="Login" Href="@($"{_AppConfiguration.BaseUrl}account/login")" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Style="margin-bottom: 16px;">
+                            Login
+                        </MudButton>
+                        <MudButton OnClick="Logout" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Style="margin-bottom: 16px;">
+                            Logout
+                        </MudButton>
+                    </MudPaper>
+                </ChildContent>
+            </MudMenu>
+
+            <MudSpacer />
+        </MudStack>
+    </MudContainer>
+</MudAppBar>
+
+<style>
+    .nav-link {
+        text-decoration: none;
+    }
+
+    .custom-nav-button {
+        background-color: var(--mud-palette-appbar-background);
+        color: var(--mud-palette-white);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        margin: 0 4px;
+        transition: all 0.3s ease;
+        position: relative;
+        top: 0;
+    }
+
+    .nav-link:hover .custom-nav-button {
+        background-color: var(--mud-palette-primary-lighten);
+        color: var(--mud-palette-white);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        top: -2px;
+    }
+
+    .nav-link.active .custom-nav-button {
+        background-color: var(--mud-palette-primary);
+        color: var(--mud-palette-white);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        top: -3px;
+    }
+</style>

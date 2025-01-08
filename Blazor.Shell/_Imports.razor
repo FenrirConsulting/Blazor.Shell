@@ -1,0 +1,36 @@
+﻿@* Global Authorization Attribute *@
+@attribute [Authorize]
+
+@* Microsoft Libraries *@
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using System
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+
+@* Third-Party Packages *@
+@using MudBlazor
+@using MudBlazor.Extensions
+@using MudBlazor.Extensions.Components
+
+@* Application-Specific Namespaces *@
+@using Blazor.RCL
+@using Blazor.RCL.Domain.Entities
+@using Blazor.RCL.Domain.Entities.Configuration;
+@using Blazor.RCL.Infrastructure.Services
+
+@* Application Components *@
+@using Blazor.Shell.Components
+@using Blazor.Shell.Components.Pages
+@using Blazor.Shell.Components.Account
+@using Blazor.Shell.Components.Account.Pages
+@using Blazor.RCL.UIComponents.Layouts
+@using Blazor.RCL.UIComponents.Components

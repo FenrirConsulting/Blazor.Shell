@@ -1,0 +1,25 @@
+@inherits LayoutComponentBase
+
+@* Loading Indicator *@
+@if (_isLoading)
+{
+    <MudProgressCircular Indeterminate="true" Size="Size.Large" Class="mud-theme-primary mx-auto d-block mt-5" />
+}
+else
+{
+    @* Main Layout *@
+    <MudLayout Class="d-flex flex-column" Style="height: 100vh;">
+        @* Menu Bar *@
+        <MenuBar />
+
+        @* Main Content Area *@
+        <MudMainContent Class="flex-grow-1 d-flex flex-column mt-1" Style="overflow:hidden;">
+            @Body
+        </MudMainContent>
+    </MudLayout>
+
+    @* MudBlazor Providers *@
+    <MudThemeProvider Theme="@(_themeService?.CurrentTheme)" />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
+}
