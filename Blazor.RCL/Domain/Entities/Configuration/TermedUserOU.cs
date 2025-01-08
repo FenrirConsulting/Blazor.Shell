@@ -10,14 +10,14 @@ namespace Blazor.RCL.Domain.Entities.Configuration
     {
         public static readonly Dictionary<string, string> DomainToPurgeUsersOU = new Dictionary<string, string>
         {
-            { "caremarkrx.net", "OU=Terminated Users,DC=caremarkrx,DC=net" },
-            { "corp.Companycaremark.com", "OU=DeprovisionedAccounts,DC=Corp,DC=Companycaremark,DC=com" },
+            { "Companyrx.net", "OU=Terminated Users,DC=Companyrx,DC=net" },
+            { "corp.CompanyCompany.com", "OU=DeprovisionedAccounts,DC=Corp,DC=CompanyCompany,DC=com" },
             { "corp.Company.com", "OU=Disabled Users and Computers,DC=Corp,DC=Company,DC=com" },
             { "minclinic.local", "OU=TerminatedUsers,DC=minclinic,DC=local" },
-            { "coe.caremarkrx.net", "OU=Terminated Users,DC=coe,DC=caremarkrx,DC=net" },
+            { "coe.Companyrx.net", "OU=Terminated Users,DC=coe,DC=Companyrx,DC=net" },
             { "corp.omnicare.com", "OU=Terminated Users,DC=corp,DC=omnicare,DC=com" },
-            { "test.Companycaremark.com", "OU=Terminated Users,DC=test,DC=Companycaremark,DC=com" },
-            { "aeth.aetna.com", "OU=Terminated Users,DC=aeth,DC=aetna,DC=com" }
+            { "test.CompanyCompany.com", "OU=Terminated Users,DC=test,DC=CompanyCompany,DC=com" },
+            { "aeth.Company.com", "OU=Terminated Users,DC=aeth,DC=Company,DC=com" }
         };
 
         public static string GetPurgeUsersOU(string domain)
